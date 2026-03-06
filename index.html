@@ -2,10 +2,27 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>FluxoCash — Controle Financeiro Pessoal</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>FluxoCash — Finanças Pessoais</title>
+
+  <!-- PWA -->
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#09090f">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="FluxoCash">
+  <link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Crect width='512' height='512' rx='112' fill='%2309090f'/%3E%3Ctext x='256' y='340' font-size='260' text-anchor='middle' fill='%23c9973a'%3E₿%3C/text%3E%3C/svg%3E">
+
+  <!-- Fonts: Syne (display) + Plus Jakarta Sans (body) -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@0.263.1/dist/umd/lucide.min.js"></script>
+
+  <!-- Chart.js -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
   <style>
     :root {
@@ -35,7 +52,7 @@
       --shadow: 0 8px 32px rgba(0,0,0,0.5);
     }
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html, body { height: 100%; font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--text); overflow-x: hidden; }
+    html, body { height: 100%; font-family: 'Plus Jakarta Sans', sans-serif; background: var(--bg); color: var(--text); overflow-x: hidden; }
     ::-webkit-scrollbar { width: 4px; height: 4px; }
     ::-webkit-scrollbar-track { background: transparent; }
     ::-webkit-scrollbar-thumb { background: var(--border-light); border-radius: 4px; }
@@ -63,11 +80,11 @@
       border-bottom: 1px solid var(--border);
     }
     .brand-name {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 28px;
-      font-weight: 700;
+      font-family: 'Syne', sans-serif;
+      font-size: 22px;
+      font-weight: 800;
       color: var(--gold);
-      letter-spacing: .3px;
+      letter-spacing: -.3px;
       line-height: 1;
     }
     .brand-tag {
@@ -99,7 +116,7 @@
       cursor: pointer;
       transition: all .2s;
       color: var(--text-muted);
-      font-size: 13.5px;
+      font-size: 13px;
       font-weight: 500;
       margin-bottom: 1px;
       border: 1px solid transparent;
@@ -111,7 +128,8 @@
       color: var(--gold);
       border-color: var(--gold-border);
     }
-    .nav-icon { font-size: 16px; width: 20px; text-align: center; flex-shrink: 0; }
+    .nav-icon { width: 18px; height: 18px; flex-shrink: 0; stroke: currentColor; }
+    .nav-icon svg { width: 18px; height: 18px; }
     .nav-badge {
       margin-left: auto;
       background: var(--red);
@@ -165,7 +183,7 @@
       gap: 16px;
       flex-wrap: wrap;
     }
-    .page-title { font-family: 'Cormorant Garamond', serif; font-size: 34px; font-weight: 700; line-height: 1; }
+    .page-title { font-family: 'Syne', sans-serif; font-size: 32px; font-weight: 800; line-height: 1; letter-spacing: -.5px; }
     .page-subtitle { font-size: 13px; color: var(--text-muted); margin-top: 5px; }
     .header-actions { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
 
@@ -176,9 +194,9 @@
       gap: 7px;
       padding: 10px 18px;
       border-radius: var(--radius-sm);
-      font-size: 13.5px;
-      font-weight: 500;
-      font-family: 'DM Sans', sans-serif;
+      font-size: 13px;
+      font-weight: 600;
+      font-family: 'Plus Jakarta Sans', sans-serif;
       cursor: pointer;
       border: none;
       transition: all .2s;
@@ -251,15 +269,15 @@
       width: 38px; height: 38px;
       border-radius: 10px;
       display: flex; align-items: center; justify-content: center;
-      font-size: 18px;
       margin-bottom: 14px;
     }
-    .s-balance .stat-icon { background: var(--gold-dim); }
-    .s-income .stat-icon { background: var(--green-bg); }
-    .s-expense .stat-icon { background: var(--red-bg); }
-    .s-savings .stat-icon { background: var(--blue-bg); }
-    .stat-label { font-size: 11px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1.2px; }
-    .stat-value { font-family: 'Cormorant Garamond', serif; font-size: 27px; font-weight: 700; margin: 4px 0 3px; line-height: 1.1; }
+    .stat-icon svg { width: 18px; height: 18px; stroke-width: 2; }
+    .s-balance .stat-icon { background: var(--gold-dim); color: var(--gold); }
+    .s-income .stat-icon { background: var(--green-bg); color: var(--green); }
+    .s-expense .stat-icon { background: var(--red-bg); color: var(--red); }
+    .s-savings .stat-icon { background: var(--blue-bg); color: var(--blue); }
+    .stat-label { font-size: 10.5px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1.5px; font-weight: 600; }
+    .stat-value { font-family: 'Syne', sans-serif; font-size: 24px; font-weight: 700; margin: 5px 0 3px; line-height: 1.1; letter-spacing: -.5px; }
     .s-balance .stat-value { color: var(--gold); }
     .s-income .stat-value { color: var(--green); }
     .s-expense .stat-value { color: var(--red); }
@@ -301,7 +319,7 @@
     .tx-desc { font-size: 13.5px; font-weight: 500; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
     .tx-meta { font-size: 11px; color: var(--text-muted); margin-top: 3px; display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
     .tx-right { display: flex; flex-direction: column; align-items: flex-end; gap: 5px; flex-shrink: 0; }
-    .tx-amount { font-family: 'Cormorant Garamond', serif; font-size: 19px; font-weight: 700; }
+    .tx-amount { font-family: 'Syne', sans-serif; font-size: 16px; font-weight: 700; }
     .tx-amount.income { color: var(--green); }
     .tx-amount.expense { color: var(--red); }
     .tx-actions { display: flex; gap: 3px; opacity: 0; transition: opacity .15s; }
@@ -342,7 +360,7 @@
     .goal-name { font-size: 15px; font-weight: 600; }
     .goal-deadline { font-size: 11px; color: var(--text-muted); margin-top: 3px; }
     .goal-amounts { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 10px; }
-    .goal-current { font-family: 'Cormorant Garamond', serif; font-size: 24px; font-weight: 700; }
+    .goal-current { font-family: 'Syne', sans-serif; font-size: 22px; font-weight: 700; }
     .goal-target { font-size: 12px; color: var(--text-muted); }
     .progress-bar { height: 7px; background: var(--border); border-radius: 4px; overflow: hidden; }
     .progress-fill { height: 100%; border-radius: 4px; transition: width .6s cubic-bezier(.4,0,.2,1); }
@@ -363,13 +381,13 @@
     .budget-cat { display: flex; align-items: center; gap: 10px; font-size: 13.5px; font-weight: 500; flex: 1; min-width: 0; }
     .budget-cat-icon { font-size: 20px; flex-shrink: 0; }
     .budget-amounts { display: flex; align-items: center; gap: 4px; font-size: 13px; color: var(--text-muted); white-space: nowrap; }
-    .budget-spent { font-weight: 600; font-family: 'Cormorant Garamond', serif; font-size: 17px; }
+    .budget-spent { font-weight: 700; font-family: 'Syne', sans-serif; font-size: 16px; }
     .budget-note { font-size: 11px; color: var(--text-muted); text-align: right; margin-top: 4px; }
 
     /* FILTER BAR */
     .filter-bar { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; margin-bottom: 18px; }
     .search-wrap { position: relative; flex: 1; min-width: 200px; }
-    .search-icon { position: absolute; left: 12px; top: 50%; transform: translateY(-50%); color: var(--text-muted); font-size: 14px; pointer-events: none; }
+    .search-icon { position: absolute; left: 12px; top: 50%; transform: translateY(-50%); color: var(--text-muted); pointer-events: none; width: 15px; height: 15px; }
     .search-input, .filter-select, .filter-input {
       background: var(--bg-card);
       border: 1px solid var(--border);
@@ -377,7 +395,7 @@
       border-radius: var(--radius-sm);
       padding: 9px 13px;
       font-size: 13px;
-      font-family: 'DM Sans', sans-serif;
+      font-family: 'Plus Jakarta Sans', sans-serif;
       transition: border-color .2s;
       outline: none;
     }
@@ -397,7 +415,7 @@
       border-radius: var(--radius-sm);
       padding: 10px 13px;
       font-size: 13.5px;
-      font-family: 'DM Sans', sans-serif;
+      font-family: 'Plus Jakarta Sans', sans-serif;
       outline: none;
       transition: border-color .2s;
     }
@@ -415,8 +433,8 @@
     .type-toggle { display: grid; grid-template-columns: 1fr 1fr; background: var(--bg-card-2); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 4px; gap: 4px; }
     .type-opt {
       padding: 9px; text-align: center; border-radius: 7px;
-      cursor: pointer; font-size: 13px; font-weight: 500; color: var(--text-muted);
-      transition: all .2s; border: none; background: none; font-family: 'DM Sans', sans-serif;
+      cursor: pointer; font-size: 13px; font-weight: 600; color: var(--text-muted);
+      transition: all .2s; border: none; background: none; font-family: 'Plus Jakarta Sans', sans-serif;
     }
     .type-opt.t-income { background: var(--green-bg); color: var(--green); }
     .type-opt.t-expense { background: var(--red-bg); color: var(--red); }
@@ -446,8 +464,8 @@
     }
     .modal-overlay.open .modal { transform: translateY(0) scale(1); }
     .modal-title {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 22px; font-weight: 700;
+      font-family: 'Syne', sans-serif;
+      font-size: 20px; font-weight: 700; letter-spacing: -.3px;
       margin-bottom: 22px;
       display: flex; align-items: center; justify-content: space-between;
     }
@@ -501,7 +519,7 @@
     .summary-row { display: flex; justify-content: space-between; align-items: center; padding: 11px 0; border-bottom: 1px solid var(--border); font-size: 13.5px; }
     .summary-row:last-child { border-bottom: none; }
     .summary-label { color: var(--text-muted); }
-    .summary-value { font-weight: 600; font-family: 'Cormorant Garamond', serif; font-size: 17px; }
+    .summary-value { font-weight: 700; font-family: 'Syne', sans-serif; font-size: 16px; }
 
     /* TOAST */
     .toast {
@@ -530,8 +548,23 @@
       border-bottom: 1px solid var(--border);
       position: sticky; top: 0; z-index: 100;
     }
-    .mob-logo { font-family: 'Cormorant Garamond', serif; font-size: 24px; font-weight: 700; color: var(--gold); }
-    .mob-page { font-size: 13px; color: var(--text-muted); }
+    .mob-logo { font-family: 'Syne', sans-serif; font-size: 20px; font-weight: 800; color: var(--gold); letter-spacing: -.3px; }
+    .mob-page { font-size: 12px; color: var(--text-muted); font-weight: 500; }
+    .mob-right { display: flex; align-items: center; gap: 6px; }
+    /* PWA Install button */
+    .pwa-install-btn {
+      display: none;
+      align-items: center; gap: 5px;
+      padding: 6px 11px; border-radius: 8px;
+      background: var(--gold-dim); color: var(--gold);
+      border: 1px solid var(--gold-border);
+      font-size: 11.5px; font-weight: 600;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      cursor: pointer; transition: all .2s;
+    }
+    .pwa-install-btn.visible { display: flex; }
+    .pwa-install-btn:hover { background: var(--gold); color: var(--bg); }
+    .pwa-install-btn svg { width: 13px; height: 13px; }
 
     /* BOTTOM NAV */
     .bottom-nav {
@@ -544,13 +577,13 @@
     }
     .bottom-nav-inner { display: flex; justify-content: space-around; }
     .bn-item {
-      display: flex; flex-direction: column; align-items: center; gap: 2px;
+      display: flex; flex-direction: column; align-items: center; gap: 3px;
       padding: 6px 10px; cursor: pointer; color: var(--text-muted);
-      font-size: 9.5px; transition: color .2s; flex: 1;
+      font-size: 9px; transition: color .2s; flex: 1; font-weight: 600;
+      font-family: 'Plus Jakarta Sans', sans-serif; letter-spacing: .3px; text-transform: uppercase;
     }
     .bn-item.active { color: var(--gold); }
-    .bn-item svg { width: 22px; height: 22px; }
-    .bn-item span { font-weight: 500; }
+    .bn-item svg { width: 20px; height: 20px; }
 
     /* REPORTS GRID */
     .reports-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
@@ -583,7 +616,7 @@
       .stats-grid { grid-template-columns: 1fr 1fr; gap: 10px; }
       /* Budget 3-col → wraps on small screens */
       .stats-grid.stats-3col { grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); }
-      .page-title { font-size: 26px; }
+      .page-title { font-size: 24px; }
       .form-row, .form-row-3 { grid-template-columns: 1fr; }
       .icon-grid { grid-template-columns: repeat(6, 1fr); }
       .goals-grid { grid-template-columns: 1fr; }
@@ -622,14 +655,14 @@
     </div>
     <nav class="sidebar-nav">
       <div class="nav-section">Principal</div>
-      <div class="nav-item active" data-page="dashboard"><span class="nav-icon">📊</span> Dashboard</div>
-      <div class="nav-item" data-page="transactions"><span class="nav-icon">↕️</span> Transações <span class="nav-badge" id="tx-count-badge" style="display:none">0</span></div>
+      <div class="nav-item active" data-page="dashboard"><i data-lucide="layout-dashboard" class="nav-icon"></i> Dashboard</div>
+      <div class="nav-item" data-page="transactions"><i data-lucide="arrow-up-down" class="nav-icon"></i> Transações <span class="nav-badge" id="tx-count-badge" style="display:none">0</span></div>
       <div class="nav-section">Planejamento</div>
-      <div class="nav-item" data-page="goals"><span class="nav-icon">🎯</span> Metas & Objetivos</div>
-      <div class="nav-item" data-page="budget"><span class="nav-icon">📋</span> Orçamento</div>
-      <div class="nav-item" data-page="reports"><span class="nav-icon">📈</span> Relatórios</div>
+      <div class="nav-item" data-page="goals"><i data-lucide="target" class="nav-icon"></i> Metas & Objetivos</div>
+      <div class="nav-item" data-page="budget"><i data-lucide="clipboard-list" class="nav-icon"></i> Orçamento</div>
+      <div class="nav-item" data-page="reports"><i data-lucide="bar-chart-2" class="nav-icon"></i> Relatórios</div>
       <div class="nav-section">Sistema</div>
-      <div class="nav-item" data-page="settings"><span class="nav-icon">⚙️</span> Configurações</div>
+      <div class="nav-item" data-page="settings"><i data-lucide="settings-2" class="nav-icon"></i> Configurações</div>
     </nav>
     <div class="sidebar-footer">
       <div class="user-card" onclick="navigate('settings')">
@@ -648,7 +681,13 @@
   <!-- ═══════════════════════════════ MOBILE HEADER ═══════════════════════════════ -->
   <header class="mobile-header">
     <div class="mob-logo">FluxoCash</div>
-    <div class="mob-page" id="mob-page-label">Dashboard</div>
+    <div class="mob-right">
+      <button class="pwa-install-btn" id="pwa-install-btn" onclick="installPWA()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        Instalar App
+      </button>
+      <div class="mob-page" id="mob-page-label">Dashboard</div>
+    </div>
   </header>
 
   <!-- ═══════════════════════════════ MAIN ═══════════════════════════════ -->
@@ -662,16 +701,22 @@
           <div class="page-subtitle" id="dash-greeting">Bem-vindo!</div>
         </div>
         <div class="header-actions">
-          <button class="btn btn-secondary btn-sm" onclick="openModal('transaction', null, 'income')">+ Receita</button>
-          <button class="btn btn-primary" onclick="openModal('transaction', null, 'expense')">+ Despesa</button>
+          <button class="btn btn-secondary btn-sm" onclick="openModal('transaction', null, 'income')">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            Receita
+          </button>
+          <button class="btn btn-primary" onclick="openModal('transaction', null, 'expense')">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            Despesa
+          </button>
         </div>
       </div>
 
       <div class="stats-grid">
-        <div class="stat-card s-balance"><div class="stat-glow"></div><div class="stat-icon">💰</div><div class="stat-label">Saldo Total</div><div class="stat-value" id="s-balance">R$ 0,00</div><div class="stat-note" id="s-balance-note">—</div></div>
-        <div class="stat-card s-income"><div class="stat-glow"></div><div class="stat-icon">📥</div><div class="stat-label">Receitas (mês)</div><div class="stat-value" id="s-income">R$ 0,00</div><div class="stat-note" id="s-income-note">—</div></div>
-        <div class="stat-card s-expense"><div class="stat-glow"></div><div class="stat-icon">📤</div><div class="stat-label">Despesas (mês)</div><div class="stat-value" id="s-expense">R$ 0,00</div><div class="stat-note" id="s-expense-note">—</div></div>
-        <div class="stat-card s-savings"><div class="stat-glow"></div><div class="stat-icon">💎</div><div class="stat-label">Taxa de Poupança</div><div class="stat-value" id="s-savings">0%</div><div class="stat-note" id="s-savings-note">—</div></div>
+        <div class="stat-card s-balance"><div class="stat-glow"></div><div class="stat-icon"><i data-lucide="wallet"></i></div><div class="stat-label">Saldo Total</div><div class="stat-value" id="s-balance">R$ 0,00</div><div class="stat-note" id="s-balance-note">—</div></div>
+        <div class="stat-card s-income"><div class="stat-glow"></div><div class="stat-icon"><i data-lucide="trending-up"></i></div><div class="stat-label">Receitas (mês)</div><div class="stat-value" id="s-income">R$ 0,00</div><div class="stat-note" id="s-income-note">—</div></div>
+        <div class="stat-card s-expense"><div class="stat-glow"></div><div class="stat-icon"><i data-lucide="trending-down"></i></div><div class="stat-label">Despesas (mês)</div><div class="stat-value" id="s-expense">R$ 0,00</div><div class="stat-note" id="s-expense-note">—</div></div>
+        <div class="stat-card s-savings"><div class="stat-glow"></div><div class="stat-icon"><i data-lucide="piggy-bank"></i></div><div class="stat-label">Taxa de Poupança</div><div class="stat-value" id="s-savings">0%</div><div class="stat-note" id="s-savings-note">—</div></div>
       </div>
 
       <div class="charts-grid">
@@ -719,14 +764,20 @@
           <div class="page-subtitle">Todas as suas movimentações financeiras</div>
         </div>
         <div class="header-actions">
-          <button class="btn btn-secondary btn-sm" onclick="exportCSV()">⬇ CSV</button>
-          <button class="btn btn-primary" onclick="openModal('transaction')">+ Nova</button>
+          <button class="btn btn-secondary btn-sm" onclick="exportCSV()">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            CSV
+          </button>
+          <button class="btn btn-primary" onclick="openModal('transaction')">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            Nova
+          </button>
         </div>
       </div>
 
       <div class="filter-bar">
         <div class="search-wrap">
-          <span class="search-icon">🔍</span>
+          <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
           <input type="text" class="search-input" id="tx-search" placeholder="Buscar transação..." oninput="renderTransactions()">
         </div>
         <select class="filter-select" id="tx-f-type" onchange="renderTransactions()">
@@ -752,7 +803,10 @@
           <div class="page-title">Metas & Objetivos</div>
           <div class="page-subtitle">Acompanhe seus sonhos e conquistas financeiras</div>
         </div>
-        <button class="btn btn-primary" onclick="openModal('goal')">+ Nova Meta</button>
+        <button class="btn btn-primary" onclick="openModal('goal')">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          Nova Meta
+        </button>
       </div>
       <div id="goals-container" class="goals-grid"></div>
     </div>
@@ -764,7 +818,10 @@
           <div class="page-title">Orçamento</div>
           <div class="page-subtitle" id="budget-month-label">Controle seus limites mensais</div>
         </div>
-        <button class="btn btn-primary" onclick="openModal('budget')">⚙ Configurar</button>
+        <button class="btn btn-primary" onclick="openModal('budget')">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M5 5a10 10 0 0 0 0 14"/></svg>
+          Configurar
+        </button>
       </div>
 
       <div class="tip-box">
@@ -871,23 +928,23 @@
   <nav class="bottom-nav">
     <div class="bottom-nav-inner">
       <div class="bn-item active" data-page="dashboard">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="9" rx="1"/><rect x="14" y="3" width="7" height="5" rx="1"/><rect x="14" y="12" width="7" height="9" rx="1"/><rect x="3" y="16" width="7" height="5" rx="1"/></svg>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="9" rx="1.5"/><rect x="14" y="3" width="7" height="5" rx="1.5"/><rect x="14" y="12" width="7" height="9" rx="1.5"/><rect x="3" y="16" width="7" height="5" rx="1.5"/></svg>
         <span>Início</span>
       </div>
       <div class="bn-item" data-page="transactions">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 16V4m0 0L3 8m4-4l4 4M17 8v12m0 0l4-4m-4 4l-4-4"/></svg>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 16V4"/><path d="M3 8l4-4 4 4"/><path d="M17 8v12"/><path d="M13 16l4 4 4-4"/></svg>
         <span>Transações</span>
       </div>
       <div class="bn-item" data-page="goals">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>
         <span>Metas</span>
       </div>
       <div class="bn-item" data-page="budget">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/></svg>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="2"/><path d="M9 12h6M9 16h4"/></svg>
         <span>Orçamento</span>
       </div>
       <div class="bn-item" data-page="reports">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
         <span>Relatórios</span>
       </div>
     </div>
@@ -905,8 +962,14 @@
     <div class="form-group">
       <label class="form-label">Tipo</label>
       <div class="type-toggle">
-        <button class="type-opt t-income" id="btn-income" onclick="setType('income')">📥 Receita</button>
-        <button class="type-opt" id="btn-expense" onclick="setType('expense')">📤 Despesa</button>
+        <button class="type-opt t-income" id="btn-income" onclick="setType('income')">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="display:inline;vertical-align:middle;margin-right:5px"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>
+          Receita
+        </button>
+        <button class="type-opt" id="btn-expense" onclick="setType('expense')">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="display:inline;vertical-align:middle;margin-right:5px"><polyline points="23 18 13.5 8.5 8.5 13.5 1 6"/><polyline points="17 18 23 18 23 12"/></svg>
+          Despesa
+        </button>
       </div>
     </div>
 
@@ -1220,6 +1283,7 @@ function openModal(type, id = null, defaultType = null) {
       populateCatSelect(t);
     }
     document.getElementById('m-transaction').classList.add('open');
+    if (typeof lucide !== 'undefined') lucide.createIcons();
   }
 
   if (type === 'goal') {
@@ -1927,6 +1991,43 @@ function toast(msg, type = 'success') {
 }
 
 /* ═══════════════════════════════════════════════════════════
+   PWA
+═══════════════════════════════════════════════════════════ */
+
+let _deferredPrompt = null;
+
+window.addEventListener('beforeinstallprompt', (e) => {
+  e.preventDefault();
+  _deferredPrompt = e;
+  const btn = document.getElementById('pwa-install-btn');
+  if (btn) btn.classList.add('visible');
+});
+
+window.addEventListener('appinstalled', () => {
+  _deferredPrompt = null;
+  const btn = document.getElementById('pwa-install-btn');
+  if (btn) btn.classList.remove('visible');
+  toast('✓ FluxoCash instalado com sucesso!', 'success');
+});
+
+function installPWA() {
+  if (!_deferredPrompt) return;
+  _deferredPrompt.prompt();
+  _deferredPrompt.userChoice.then(choice => {
+    if (choice.outcome === 'accepted') toast('Instalando FluxoCash...', 'info');
+    _deferredPrompt = null;
+    const btn = document.getElementById('pwa-install-btn');
+    if (btn) btn.classList.remove('visible');
+  });
+}
+
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('/sw.js').catch(() => {});
+  });
+}
+
+/* ═══════════════════════════════════════════════════════════
    INIT
 ═══════════════════════════════════════════════════════════ */
 
@@ -1940,6 +2041,15 @@ function init() {
   renderDashboard();
   renderTransactions();
   renderGoals();
+
+  // Init Lucide icons
+  if (typeof lucide !== 'undefined') lucide.createIcons();
+
+  // Handle PWA shortcuts
+  const params = new URLSearchParams(location.search);
+  const action = params.get('action');
+  if (action === 'expense') setTimeout(() => openModal('transaction', null, 'expense'), 400);
+  else if (action === 'income') setTimeout(() => openModal('transaction', null, 'income'), 400);
 }
 
 // Keyboard shortcut ESC to close modals
